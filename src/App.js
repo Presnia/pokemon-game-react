@@ -12,16 +12,13 @@ const App = () => {
               descr="This is Description!"/>
       <Layout title="This is title"
               descr="This is Description!"
-              urlBg={bg2}
-              colorBg={null}/>
+              urlBg={bg2}/>
       <Layout title="This is title"
               descr="This is Description!"
-              urlBg={null}
-              colorBg={"yellow"}/>
+              colorBg="yellow"/>
       <Layout title="This is title"
               descr="This is Description!"
-              urlBg={bg3}
-              colorBg={null}/>
+              urlBg={bg3}/>
       <Footer />
     </div>
   );
