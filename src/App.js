@@ -1,17 +1,30 @@
-import logo from './logo.svg';
 import './App.css';
+import Header from "./components/Header";
+import Layout from "./components/Layout";
+import Footer from "./components/Footer";
+import bg2 from '../src/assets/bg2.jpg';
+import bg3 from '../src/assets/bg3.jpg';
 
-function App() {
+const App = () => {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Hello World with React.JS!!!
-        </p>
-      </header>
+      <Header title="This is title"
+              descr="This is Description!"/>
+      <Layout title="This is title"
+              descr="This is Description!"
+              urlBg={bg2}
+              colorBg={null}/>
+      <Layout title="This is title"
+              descr="This is Description!"
+              urlBg={null}
+              colorBg={"yellow"}/>
+      <Layout title="This is title"
+              descr="This is Description!"
+              urlBg={bg3}
+              colorBg={null}/>
+      <Footer />
     </div>
   );
-}
+};
 
 export default App;
