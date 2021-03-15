@@ -145,11 +145,11 @@ const POKEMONS = [
 const App = () => {
   return (
     <div className="App">
-      <Header title="The GAME YOU have to PLAY"
+      <Header title="Pokemon Game"
               descr="Something FASCINATING ;)"/>
-      <Layout title="The Pokemons are HERE!"
+      <Layout title="Rules"
               urlBg={bg2}/>
-      <Layout title="Our Cards" colorBg="yellow">
+      <Layout title="Cards" colorBg="yellow">
         <div className="flex">
           {
             POKEMONS.map((e, i) =>
