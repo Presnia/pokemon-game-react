@@ -2,7 +2,6 @@ import s from './style.module.css';
 
 const Header = ({ title, descr, onClickBtn }) => {
   const handleClick = () => {
-    console.log('=====> <Header />');
     onClickBtn && onClickBtn('game');
   }
   return (

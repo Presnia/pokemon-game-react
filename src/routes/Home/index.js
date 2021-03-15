@@ -144,7 +144,6 @@ const POKEMONS = [
 
 const HomePage = ({ onChangePage }) => {
   const handleClickBtn = (page) => {
-    console.log('=====> <HomePage />');
     onChangePage && onChangePage(page);
   }
   return (
