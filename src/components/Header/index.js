@@ -10,7 +10,7 @@ const Header = ({ title, descr, onClickBtn }) => {
       <div className={s.container}>
         <h1>{title}</h1>
         <p>{descr}</p>
-        <button onClick={handleClick}>
+        <button className={s.start} onClick={handleClick}>
           Start Game
         </button>
       </div>
