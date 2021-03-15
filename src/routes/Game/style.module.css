@@ -1,0 +1,25 @@
+.div {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    font-size: large;
+    text-align: center;
+}
+
+.backHomeBtn {
+    margin: auto;
+    width: 12vw;
+    height: 3vw;
+    background-color: #e600ff;
+    border: none;
+    border-radius: 10px;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.backHomeBtn:hover {
+    background-color: transparent;
+    border: 1px solid #e600ff;
+    font-weight: bold;
+    color: #e600ff;
+}

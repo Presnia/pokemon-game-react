@@ -1,13 +1,13 @@
-import './style.module.css';
+import s from './style.module.css';
 
 const GamePage = ({ onChangePage }) => {
   const handleClick = () => {
     onChangePage && onChangePage('app');
   }
   return (
-    <div>
+    <div className={s.div}>
       This is Game Page!!!
-      <button onClick={handleClick}>
+      <button className={s.backHomeBtn} onClick={handleClick}>
         Going Home
       </button>
     </div>
