@@ -9,7 +9,9 @@ const GamePage = ({ onChangePage }) => {
   return (
     <div className={s.div}>
       This is Game Page!!!
-      <button className={cn(Button, s.back)} text="Going Home" onClick={handleClick}>
+      <button className={cn(Button, s.back)}
+              text="Going Home"
+              onClick={handleClick}>
         Going Home
       </button>
     </div>

@@ -159,7 +159,7 @@ const HomePage = ({ onChangePage }) => {
       <Layout title="Cards" colorBg="yellow">
         <div className={s.flex}>
           {
-            POKEMONS.map((e, i) =>
+            POKEMONS.map((e) =>
               <PokemonCard key={e.id} type={e.type} name={e.name} img={e.img} id={e.id} values={e.values}/>)
           }
         </div>
