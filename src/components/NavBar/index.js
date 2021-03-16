@@ -11,7 +11,7 @@ const NavBar = ({ clickOnBtn, isActive}) => {
         <p className={s.brand}>
           LOGO
         </p>
-        <a className={cn(s.menuButton, {[s.active]: isActive}, {[s.deactive]: !isActive})}
+        <a className={cn(s.menuButton, {[s.active]: isActive})}
            onClick={() => handleClick()}
         >
           <span/>
