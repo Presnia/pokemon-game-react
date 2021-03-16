@@ -86,21 +86,3 @@
     color: #fafafa;
     line-height: 32px;
 }
-
-.start {
-    margin-top: 10px;
-    width: 12vw;
-    height: 3vw;
-    background-color: #e600ff;
-    border: none;
-    border-radius: 10px;
-    text-transform: uppercase;
-    cursor: pointer;
-}
-
-.start:hover {
-    background-color: transparent;
-    border: 1px solid #e600ff;
-    font-weight: bold;
-    color: #e600ff;
-}

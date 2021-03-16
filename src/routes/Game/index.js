@@ -1,4 +1,6 @@
 import s from './style.module.css';
+import Button from "../../components/Button";
+import cn from 'classnames';
 
 const GamePage = ({ onChangePage }) => {
   const handleClick = () => {
@@ -7,7 +9,7 @@ const GamePage = ({ onChangePage }) => {
   return (
     <div className={s.div}>
       This is Game Page!!!
-      <button className={s.backHomeBtn} onClick={handleClick}>
+      <button className={cn(Button, s.back)} text="Going Home" onClick={handleClick}>
         Going Home
       </button>
     </div>

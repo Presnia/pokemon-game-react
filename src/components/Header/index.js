@@ -1,4 +1,5 @@
 import s from './style.module.css';
+import Button from "../Button";
 
 const Header = ({ title, descr, onClickBtn }) => {
   const handleClick = () => {
@@ -10,7 +11,8 @@ const Header = ({ title, descr, onClickBtn }) => {
       <div className={s.container}>
         <h1>{title}</h1>
         <p>{descr}</p>
-        <button className={s.start}
+        <button className={Button}
+                text="Start Game"
                 onClick={handleClick}>
           Start Game
         </button>

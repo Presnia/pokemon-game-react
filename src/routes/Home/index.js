@@ -1,4 +1,4 @@
-import './style.module.css';
+import s from'./style.module.css';
 import Header from "../../components/Header";
 import Layout from "../../components/Layout";
 import Footer from "../../components/Footer/index";
@@ -6,6 +6,7 @@ import bg2 from '../../assets/bg2.jpg';
 import bg3 from '../../assets/bg3.jpg';
 import PokemonCard from "../../components/PokemonCard";
 import logoImg from '../../assets/logo.svg';
+import MenuHeader from "../../components/MenuHeader";
 
 const POKEMONS = [
   {
@@ -148,6 +149,7 @@ const HomePage = ({ onChangePage }) => {
   }
   return (
     <div className="App">
+      <MenuHeader />
       <Header title="Pokemon Game"
               descr="Something FASCINATING ;)"
               onClickBtn={handleClickBtn}
@@ -155,7 +157,7 @@ const HomePage = ({ onChangePage }) => {
       <Layout title="Rules"
               urlBg={bg2}/>
       <Layout title="Cards" colorBg="yellow">
-        <div className="flex">
+        <div className={s.flex}>
           {
             POKEMONS.map((e, i) =>
               <PokemonCard key={e.id} type={e.type} name={e.name} img={e.img} id={e.id} values={e.values}/>)
