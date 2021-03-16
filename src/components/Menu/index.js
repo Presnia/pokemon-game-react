@@ -1,15 +1,11 @@
 import s from './style.module.css';
 import cn from 'classnames';
 
-const Menu = ({ changePage }) => {
-  const handleChange = () => {
-    console.log('===> <Menu/>')
-    changePage && changePage();
-  }
+const Menu = ({ isActive }) => {
+
+
   return (
-    <div className={cn(s.menuContainer, s.deactive)}
-         onChange={handleChange}
-    >
+    <div className={cn(s.menuContainer, {[s.active]: isActive })}>
       <div className={s.overlay}/>
       <div className="menuItems">
         <ul>
