@@ -1,9 +1,9 @@
 import s from './style.module.css';
 import cn from 'classnames';
 
-const NavBar = ({ clickOnBtn, isActive, isPage }) => {
+const NavBar = ({ clickOnBtn, isActive}) => {
   const handleClick = () => {
-    clickOnBtn && clickOnBtn('menuItems', isPage);
+    clickOnBtn && clickOnBtn('menuItems');
   }
   return (
     <nav id={s.navbar}>
@@ -11,7 +11,7 @@ const NavBar = ({ clickOnBtn, isActive, isPage }) => {
         <p className={s.brand}>
           LOGO
         </p>
-        <a className={cn(s.menuButton, {[s.active]: isActive})}
+        <a className={cn(s.menuButton, {[s.active]: isActive}, {[s.deactive]: !isActive})}
            onClick={() => handleClick()}
         >
           <span/>

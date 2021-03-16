@@ -3,7 +3,6 @@ import cn from 'classnames';
 
 const Menu = ({ isActive }) => {
 
-
   return (
     <div className={cn(s.menuContainer, {[s.active]: isActive })}>
       <div className={s.overlay}/>
