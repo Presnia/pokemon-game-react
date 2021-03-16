@@ -148,7 +148,7 @@ const HomePage = ({ onChangePage }) => {
     onChangePage && onChangePage(page);
   }
   return (
-    <div className="App">
+    <div className="home">
       <MenuHeader />
       <Header title="Pokemon Game"
               descr="Something FASCINATING ;)"

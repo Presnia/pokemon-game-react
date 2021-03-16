@@ -1,15 +1,20 @@
 import s from './style.module.css';
 import cn from 'classnames';
 
-const Menu = ({ isActive }) => {
-
+const Menu = ({ changePage,isActive }) => {
+const handleClick = () => {
+  console.log('home')
+  changePage && changePage('home')
+}
   return (
     <div className={cn(s.menuContainer, {[s.active]: isActive })}>
       <div className={s.overlay}/>
       <div className="menuItems">
         <ul>
           <li>
-            <a href="#welcome">
+            <a href="#welcome"
+               onClick={handleClick}
+            >
               HOME
             </a>
           </li>
