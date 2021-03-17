@@ -1,26 +1,30 @@
+import { Link } from "react-router-dom";
 import s from './style.module.css';
 import cn from 'classnames';
 
 const MENU = [
   {
     title: 'HOME',
-    to: '#welcome',
+    to: '/home',
   },
   {
     title: 'GAME',
-    to: '#game',
+    to: '/game',
   },
   {
     title: 'ABOUT',
-    to: '#about',
+    to: '/about',
   },
   {
     title: 'CONTACT',
-    to: '#contact',
+    to: '/contact',
   },
 ];
 
-const Menu = ({ isActive }) => {
+const Menu = ({ isActive, onClickBtn }) => {
+  const handleTitleClick = () => {
+    onClickBtn && onClickBtn('game');
+  }
   return (
     <div className={cn(s.menuContainer, {
         [s.active]: isActive === true,
@@ -32,9 +36,9 @@ const Menu = ({ isActive }) => {
              {
                 MENU.map(({title, to}, index) => (
                   <li key={index}>
-                    <a href={to}>
+                    <Link to={to} onClick={handleTitleClick}>
                       {title}
-                    </a>
+                    </Link>
                   </li>
                 ))
               };
