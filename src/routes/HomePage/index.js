@@ -16,7 +16,7 @@ const HomePage = ({ onChangePage }) => {
     <div className="home">
       <MenuHeader />
       <Header title="Pokemon Game"
-              descr="Something FASCINATING ;)"
+              descr="Something FASCINATING"
               onClickBtn={handleClickBtn}
       />
       <Layout id="rules"
