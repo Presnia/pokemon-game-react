@@ -2,7 +2,7 @@ import { useHistory } from 'react-router-dom';
 import s from './style.module.css';
 import Button from "../Button";
 
-const Header = ({ title, descr, onClickBtn }) => {
+const Header = ({ title, descr}) => {
   const history = useHistory();
 
   const handleClick = () => {

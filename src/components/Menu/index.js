@@ -5,7 +5,7 @@ import cn from 'classnames';
 const MENU = [
   {
     title: 'HOME',
-    to: '/home',
+    to: '/',
   },
   {
     title: 'GAME',

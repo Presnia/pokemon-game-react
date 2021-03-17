@@ -3,7 +3,7 @@ import s from './style.module.css';
 import Button from "../../components/Button";
 import cn from 'classnames';
 
-const GamePage = ({ onChangePage }) => {
+const GamePage = () => {
   const history = useHistory();
 
   const handleClick = () => {
