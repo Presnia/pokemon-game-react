@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import s from './style.module.css';
 import POKEMONS from '../../components/Pokemons/index';
@@ -6,8 +7,9 @@ import cn from 'classnames';
 import PokemonCard from "../../components/PokemonCard";
 
 const GamePage = () => {
-  const history = useHistory();
+  const[isCard, setCard] = useState(POKEMONS);
 
+  const history = useHistory();
   const handleClick = () => {
     history.push('/');
   }
