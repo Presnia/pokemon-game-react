@@ -21,9 +21,10 @@ const MENU = [
   },
 ];
 
-const Menu = ({ isActive, onClickBtn }) => {
+const Menu = ({ isActive, onClickBtn, clickOnHamburg }) => {
   const handleTitleClick = () => {
     onClickBtn && onClickBtn('game');
+    clickOnHamburg();
   }
   return (
     <div className={cn(s.menuContainer, {
@@ -36,7 +37,7 @@ const Menu = ({ isActive, onClickBtn }) => {
              {
                 MENU.map(({title, to}, index) => (
                   <li key={index}>
-                    <Link to={to} onClick={handleTitleClick}>
+                    <Link to={to} onClick={handleTitleClick} >
                       {title}
                     </Link>
                   </li>

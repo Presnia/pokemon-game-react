@@ -11,7 +11,7 @@ const MenuHeader = ({ bgActive }) => {
 
   return (
     <div className="menuHeader">
-      <Menu isActive={isActive} />
+      <Menu isActive={isActive} clickOnHamburg={handleClickHamburg}/>
       <NavBar clickOnHamburg={handleClickHamburg}
               isActive={isActive}
               bgActive={bgActive}
