@@ -5,8 +5,8 @@ import NavBar from "../NavBar";
 const MenuHeader = () => {
   const [isActive, setActive] = useState(null);
 
-  const handleClick = (val) => {
-    setActive(val);
+  const handleClick = () => {
+    setActive(isActive => !isActive);
   };
 
   return (
