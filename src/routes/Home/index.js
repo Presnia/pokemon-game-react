@@ -154,7 +154,8 @@ const HomePage = ({ onChangePage }) => {
               descr="Something FASCINATING ;)"
               onClickBtn={handleClickBtn}
       />
-      <Layout title="Rules"
+      <Layout id="rules"
+              title="Rules"
               urlBg={bg2}/>
       <Layout title="Cards" colorBg="yellow">
         <div className={s.flex}>
