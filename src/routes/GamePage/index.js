@@ -6,10 +6,12 @@ import Button from "../../components/Button";
 import cn from 'classnames';
 import PokemonCard from "../../components/PokemonCard";
 
-const GamePage = () => {
-  const[isCard, setCard] = useState(POKEMONS);
-  const cardId = POKEMONS.map(card => card.id);
+const GamePage = ({ isActive }) => {
+  const[isCards, setCards] = useState(POKEMONS);
 
+  const handleClickOnCard = () => {
+    setCards(isCards.map(card => card.id ? card.active === true : card.active === false));
+  }
 
   const history = useHistory();
   const handleClick = () => {
@@ -18,6 +20,11 @@ const GamePage = () => {
   return (
     <>
       <div className={s.div}>
+        <button className={cn(Button, s.back)}
+                text="Going Home"
+                onClick={handleClick}>
+          Going Home
+        </button>
         <div className={s.flex}>
           {
             POKEMONS.map((e) =>
@@ -26,14 +33,10 @@ const GamePage = () => {
                            name={e.name}
                            img={e.img}
                            id={e.id}
-                           values={e.values}/>)
+                           values={e.values}
+                           clickOn={handleClickOnCard}/>)
           }
         </div>
-        <button className={cn(Button, s.back)}
-                text="Going Home"
-                onClick={handleClick}>
-          Going Home
-        </button>
       </div>
     </>
   );
