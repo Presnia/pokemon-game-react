@@ -9,7 +9,7 @@ import PokemonCard from "../../components/PokemonCard";
 const GamePage = ({ isActive }) => {
   const[isCards, setCards] = useState(POKEMONS);
 
-  const handleClickOnCard = () => {
+  const handleClickOnCards = () => {
     setCards(isCards.map(card => card.id ? card.active === true : card.active === false));
   }
 
@@ -34,7 +34,7 @@ const GamePage = ({ isActive }) => {
                            img={e.img}
                            id={e.id}
                            values={e.values}
-                           clickOn={handleClickOnCard}/>)
+                           clickOn={handleClickOnCards}/>)
           }
         </div>
       </div>
