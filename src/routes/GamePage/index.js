@@ -10,7 +10,7 @@ const GamePage = ({ isActive }) => {
   const[isCards, setCards] = useState(POKEMONS);
 
   const handleClickOnCards = () => {
-    setCards(isCards.map(card => card.id ? card.active === true : card.active === false));
+    setCards(isCards.map(card => card.id ? card.active === isActive : card.active === false));
   }
 
   const history = useHistory();
@@ -34,6 +34,7 @@ const GamePage = ({ isActive }) => {
                            img={e.img}
                            id={e.id}
                            values={e.values}
+                           isActive={true}
                            clickOn={handleClickOnCards}/>)
           }
         </div>

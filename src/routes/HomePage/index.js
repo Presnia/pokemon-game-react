@@ -26,11 +26,18 @@ const HomePage = ({ onChangePage }) => {
         <div className={s.flex}>
           {
             POKEMONS.map((e) =>
-              <PokemonCard key={e.id} type={e.type} name={e.name} img={e.img} id={e.id} values={e.values}/>)
+              <PokemonCard key={e.id}
+                           type={e.type}
+                           name={e.name}
+                           img={e.img}
+                           id={e.id}
+                           values={e.values}
+              />)
           }
         </div>
       </Layout>
-      <Layout title="YEP, you have to read this CLOSELY" urlBg={bg3}>
+      <Layout title="YEP, you have to read this CLOSELY"
+              urlBg={bg3}>
         <img src={logoImg} alt="logo"/>
         <p>In the game two players face off against one another, one side playing as "blue", the other as "red" on a
           3x3 grid.
