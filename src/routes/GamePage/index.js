@@ -1,17 +1,34 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import s from './style.module.css';
-import POKEMONS from '../../components/Pokemons/index';
+import database from "../../service/firebase";
 import Button from "../../components/Button";
 import cn from 'classnames';
 import PokemonCard from "../../components/PokemonCard";
 
 const GamePage = ({ isActive }) => {
-  const[isCards, setCards] = useState(POKEMONS);
+  const[pokemons, setPokemons] = useState({});
+
+  useEffect(() => {
+    database.ref('pokemons').once('value', snapshot => {
+      setPokemons(snapshot.val());
+    })
+  }, []);
 
   const handleClickOnCards = () => {
-    setCards(isCards.map(card => card.id ? card.active === isActive : card.active === false));
-  }
+    setPokemons(prevState => {
+      return Object.entries(prevState).reduce((acc, item) => {
+        const pokemon = {...item[1]};
+        if (pokemon.id) {
+          pokemon.active = true;
+        };
+
+        acc[item[0]] = pokemon;
+
+        return acc;
+      }, {});
+    });
+  };
 
   const history = useHistory();
   const handleClick = () => {
@@ -27,14 +44,14 @@ const GamePage = ({ isActive }) => {
         </button>
         <div className={s.flex}>
           {
-            POKEMONS.map((e) =>
-              <PokemonCard key={e.id}
-                           type={e.type}
-                           name={e.name}
-                           img={e.img}
-                           id={e.id}
-                           values={e.values}
-                           isActive={true}
+            Object.entries(pokemons).map(([key, {name, img, id, type, values, active}]) =>
+              <PokemonCard key={key}
+                           type={type}
+                           name={name}
+                           img={img}
+                           id={id}
+                           values={values}
+                           isActive={active}
                            clickOn={handleClickOnCards}/>)
           }
         </div>
