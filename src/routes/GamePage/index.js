@@ -15,6 +15,12 @@ const GamePage = ({ isActive }) => {
     })
   }, [pokemons]);
 
+  /*useEffect(() => {
+    database.ref('pokemons').set([key,
+      {...item,}, {active: isActive}
+    ])
+  }, []);*/
+
   const handleAddPokemon = () => {
     function addPokemon() {
       const newPokemon = {
@@ -31,7 +37,7 @@ const GamePage = ({ isActive }) => {
 
       const newKey = database.ref().child('pokemons').push().key;
       return database.ref('pokemons/' + newKey).update(newPokemon);
-    };
+    }
 
     addPokemon().then();
   };
