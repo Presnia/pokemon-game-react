@@ -13,7 +13,7 @@ const GamePage = ({ isActive }) => {
     database.ref('pokemons').once('value', snapshot => {
       setPokemons(snapshot.val());
     })
-  }, []);
+  }, [pokemons]);
 
   const handleAddPokemon = () => {
     function addPokemon() {
@@ -26,6 +26,7 @@ const GamePage = ({ isActive }) => {
         "name": "pidgeotto",
         "type": "normal",
         "values":  {bottom: 1, left: 2, right: 5, top: 7},
+        "weight": 340,
       };
 
       const newKey = database.ref().child('pokemons').push().key;
@@ -44,8 +45,6 @@ const GamePage = ({ isActive }) => {
         }
 
         acc[item[0]] = pokemon;
-
-
 
         return acc;
       }, {});
