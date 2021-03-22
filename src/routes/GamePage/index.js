@@ -13,13 +13,9 @@ const GamePage = ({ isActive }) => {
     database.ref('pokemons').once('value', snapshot => {
       setPokemons(snapshot.val());
     })
-  }, [pokemons]);
+  }, []);
 
-  /*useEffect(() => {
-    database.ref('pokemons').set([key,
-      {...item,}, {active: isActive}
-    ])
-  }, []);*/
+  const newKey = database.ref().child('pokemons').push().key;
 
   const handleAddPokemon = () => {
     function addPokemon() {
@@ -35,8 +31,7 @@ const GamePage = ({ isActive }) => {
         "weight": 340,
       };
 
-      const newKey = database.ref().child('pokemons').push().key;
-      return database.ref('pokemons/' + newKey).update(newPokemon);
+      return database.ref('pokemons/' + newKey).set(newPokemon);
     }
 
     addPokemon().then();
@@ -51,6 +46,11 @@ const GamePage = ({ isActive }) => {
         }
 
         acc[item[0]] = pokemon;
+
+        const addActiveStateToDB = () =>
+          database.ref('pokemons/' + newKey).update(pokemon, {active: isActive});
+
+        addActiveStateToDB().then();
 
         return acc;
       }, {});
