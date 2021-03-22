@@ -9,14 +9,14 @@ import s from './style.module.css';
 const GamePage = ({ isActive }) => {
   const[pokemons, setPokemons] = useState({});
 
-  const data = () => {
+  const getPokemons = () => {
     database.ref('pokemons').once('value', snapshot => {
       setPokemons(snapshot.val());
     });
   };
 
   useEffect(() => {
-    data()
+    getPokemons()
   }, []);
 
   const handleAddPokemon = () => {
@@ -34,19 +34,27 @@ const GamePage = ({ isActive }) => {
       };
 
       const newKey = database.ref().child('pokemons').push().key;
-      return database.ref('pokemons/' + newKey).set(newPokemon);
+      return database.ref('pokemons/' + newKey).set(newPokemon).then(() => getPokemons());
     }
 
-    addPokemon().then(data());
+    addPokemon().then(getPokemons());
   };
 
-  const handleClickOnCards = (key) => {
-        database.ref('pokemons/' + key).update(
-            {active: !pokemons[key].active}, (error) => {
-              if (error) {
-                console.log('Error ===>', error)
-              }
-          }).then(data());
+  const handleClickOnCards = (id) => {
+    setPokemons(prevState => {
+      return Object.entries(prevState).reduce((acc, item) => {
+        const pokemon = {...item[1]};
+        if (pokemon.id === id) {
+          pokemon.active = true;
+        }
+
+        acc[item[0]] = pokemon;
+
+        database.ref('pokemons/' + item[0]).set(pokemon);
+
+        return acc;
+      }, {});
+    });
   };
 
   return (
