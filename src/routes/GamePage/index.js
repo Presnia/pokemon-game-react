@@ -1,40 +1,79 @@
-import { useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import s from './style.module.css';
-import POKEMONS from '../../components/Pokemons/index';
+import { useState, useEffect } from 'react';
+import database from "../../service/firebase";
 import Button from "../../components/Button";
 import cn from 'classnames';
 import PokemonCard from "../../components/PokemonCard";
 
+import s from './style.module.css';
+
 const GamePage = ({ isActive }) => {
-  const[isCards, setCards] = useState(POKEMONS);
+  const[pokemons, setPokemons] = useState({});
 
-  const handleClickOnCards = () => {
-    setCards(isCards.map(card => card.id ? card.active === isActive : card.active === false));
-  }
+  useEffect(() => {
+    database.ref('pokemons').once('value', snapshot => {
+      setPokemons(snapshot.val());
+    })
+  }, []);
 
-  const history = useHistory();
-  const handleClick = () => {
-    history.push('/');
-  }
+  const newKey = database.ref().child('pokemons').push().key;
+
+  const handleAddPokemon = () => {
+    function addPokemon() {
+      const newPokemon = {
+        "abilities": ["keen-eye", "tangled-feet", "big-pecks"],
+        "base_experience": 122,
+        "height": 11,
+        "id": 17,
+        "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/17.png",
+        "name": "pidgeotto",
+        "type": "normal",
+        "values":  {bottom: 1, left: 2, right: 5, top: 7},
+        "weight": 340,
+      };
+
+      return database.ref('pokemons/' + newKey).set(newPokemon);
+    }
+
+    addPokemon().then();
+  };
+
+  const handleClickOnCards = (id) => {
+    setPokemons(prevState => {
+      return Object.entries(prevState).reduce((acc, item) => {
+        const pokemon = {...item[1]};
+        if (pokemon.id === id) {
+          pokemon.active = true;
+        }
+
+        acc[item[0]] = pokemon;
+
+        const addActiveStateToDB = () =>
+          database.ref('pokemons/' + newKey).update(pokemon, {active: isActive});
+
+        addActiveStateToDB().then();
+
+        return acc;
+      }, {});
+    });
+  };
+
   return (
     <>
       <div className={s.div}>
         <button className={cn(Button, s.back)}
-                text="Going Home"
-                onClick={handleClick}>
-          Going Home
+                onClick={handleAddPokemon}>
+          Add New Pokemon
         </button>
         <div className={s.flex}>
           {
-            POKEMONS.map((e) =>
-              <PokemonCard key={e.id}
-                           type={e.type}
-                           name={e.name}
-                           img={e.img}
-                           id={e.id}
-                           values={e.values}
-                           isActive={true}
+            Object.entries(pokemons).map(([key, {name, img, id, type, values, active}]) =>
+              <PokemonCard key={key}
+                           type={type}
+                           name={name}
+                           img={img}
+                           id={id}
+                           values={values}
+                           active={active}
                            clickOn={handleClickOnCards}/>)
           }
         </div>
