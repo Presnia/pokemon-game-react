@@ -4,7 +4,7 @@ import cn from 'classnames';
 import s from './style.module.css';
 import cardBackSide from './assets/card-back-side.jpg';
 
-const PokemonCard = ({name, type, img, id, values}) => {
+const PokemonCard = ({name, type, img, id, values, minimize, className}) => {
   const [isActive, setActive] = useState(false);
 
   const handleClick = () => {
@@ -12,8 +12,7 @@ const PokemonCard = ({name, type, img, id, values}) => {
   }
 
   return (
-    <div className={s.root} onClick={handleClick}>
-      <div className={cn(s.pokemonCard, {[s.active]: isActive})}>
+      <div className={cn(className, s.pokemonCard, {[s.active]: isActive})} onClick={handleClick}>
         <div className={s.cardFront}>
           <div className={cn(s.wrap, s.front)}>
             <div className={cn(s.pokemon, s[type])}>
@@ -42,7 +41,6 @@ const PokemonCard = ({name, type, img, id, values}) => {
         </div>
 
       </div>
-    </div>
   );
 }
 
