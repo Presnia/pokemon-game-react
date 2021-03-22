@@ -42,7 +42,11 @@ const GamePage = ({ isActive }) => {
 
   const handleClickOnCards = (key) => {
         database.ref('pokemons/' + key).update(
-            {active: !pokemons[key].active}).then(data());
+            {active: !pokemons[key].active}, (error) => {
+              if (error) {
+                console.log('Error ===>', error)
+              }
+          }).then(data());
   };
 
   return (
