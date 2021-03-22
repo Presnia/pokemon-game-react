@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import database from "../../service/firebase";
+import { useState, useEffect, useContext } from 'react';
+import {FireBaseContext} from "../../context/firebaseContext";
 import Button from "../../components/Button";
 import cn from 'classnames';
 import PokemonCard from "../../components/PokemonCard";
@@ -7,20 +7,20 @@ import PokemonCard from "../../components/PokemonCard";
 import s from './style.module.css';
 
 const GamePage = ({ isActive }) => {
+  const firebase = useContext(FireBaseContext);
   const[pokemons, setPokemons] = useState({});
 
   const getPokemons = () => {
-    database.ref('pokemons').once('value', snapshot => {
-      setPokemons(snapshot.val());
-    });
+    firebase.getPokemonSocket((pokemons) => {
+      setPokemons(pokemons);
+    })
   };
 
   useEffect(() => {
-    getPokemons()
+    getPokemons();
   }, []);
 
-  const handleAddPokemon = () => {
-    function addPokemon() {
+  const handleAddPokemon = (cb) => {
       const newPokemon = {
         "abilities": ["keen-eye", "tangled-feet", "big-pecks"],
         "base_experience": 122,
@@ -33,24 +33,20 @@ const GamePage = ({ isActive }) => {
         "weight": 340,
       };
 
-      const newKey = database.ref().child('pokemons').push().key;
-      return database.ref('pokemons/' + newKey).set(newPokemon).then(() => getPokemons());
-    }
-
-    addPokemon().then(getPokemons());
+      firebase.addPokemon(newPokemon, () => getPokemons());
   };
 
-  const handleClickOnCards = (id) => {
+  const handleChangeActive = (id, key) => {
     setPokemons(prevState => {
       return Object.entries(prevState).reduce((acc, item) => {
         const pokemon = {...item[1]};
         if (pokemon.id === id) {
-          pokemon.active = true;
+          pokemon.active = !pokemon.active;
         }
 
         acc[item[0]] = pokemon;
 
-        database.ref('pokemons/' + item[0]).set(pokemon);
+        firebase.postPokemon(item[0], pokemon);
 
         return acc;
       }, {});
@@ -74,7 +70,7 @@ const GamePage = ({ isActive }) => {
                            id={id}
                            values={values}
                            active={active}
-                           clickOn={handleClickOnCards}/>)
+                           clickOn={handleChangeActive}/>)
           }
         </div>
       </div>
