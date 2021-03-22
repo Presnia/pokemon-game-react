@@ -9,13 +9,15 @@ import s from './style.module.css';
 const GamePage = ({ isActive }) => {
   const[pokemons, setPokemons] = useState({});
 
-  useEffect(() => {
+  const data = () => {
     database.ref('pokemons').once('value', snapshot => {
       setPokemons(snapshot.val());
-    })
-  }, []);
+    });
+  };
 
-  const newKey = database.ref().child('pokemons').push().key;
+  useEffect(() => {
+    data()
+  }, []);
 
   const handleAddPokemon = () => {
     function addPokemon() {
@@ -31,30 +33,20 @@ const GamePage = ({ isActive }) => {
         "weight": 340,
       };
 
+      const newKey = database.ref().child('pokemons').push().key;
       return database.ref('pokemons/' + newKey).set(newPokemon);
     }
 
-    addPokemon().then();
+    addPokemon().then(data());
   };
 
-  const handleClickOnCards = (id) => {
-    setPokemons(prevState => {
-      return Object.entries(prevState).reduce((acc, item) => {
-        const pokemon = {...item[1]};
-        if (pokemon.id === id) {
-          pokemon.active = true;
-        }
-
-        acc[item[0]] = pokemon;
-
-        const addActiveStateToDB = () =>
-          database.ref('pokemons/' + newKey).update(pokemon, {active: isActive});
-
-        addActiveStateToDB().then();
-
-        return acc;
-      }, {});
-    });
+  const handleClickOnCards = (key) => {
+        database.ref('pokemons/' + key).update(
+            {active: !pokemons[key].active}, (error) => {
+              if (error) {
+                console.log('Error ===>', error)
+              }
+          }).then(data());
   };
 
   return (
