@@ -1,4 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import {FireBaseContext} from "../../../../context/firebaseContext";
 import Button from "../../../../components/Button/index";
 import cn from 'classnames';
@@ -10,7 +11,7 @@ import {PokemonContext} from "../../../../context/pokemonContext";
 const StartPage = ({ isActive }) => {
   const firebase = useContext(FireBaseContext);
   const pokemonsContext = useContext(PokemonContext);
-  console.log('==> pokemonsContext', pokemonsContext);
+  const history = useHistory();
   const[pokemons, setPokemons] = useState({});
 
   const getPokemons = () => {
@@ -39,12 +40,18 @@ const StartPage = ({ isActive }) => {
     }))
   };
 
+  const handleStartGame = () => {
+    history.push('/game/board');
+  }
+
   return (
     <PokemonContext.Provider value={{pokemon: []}}>
       <>
         <div className={s.div}>
           <button className={cn(Button, s.back)}
-                  >
+                  onClick={handleStartGame}
+                  disabled={Object.keys(pokemonsContext.pokemons).length < 5}
+          >
             Start Game
           </button>
           <div className={s.flex}>
