@@ -5,6 +5,7 @@ import cn from 'classnames';
 import PokemonCard from "../../../../components/PokemonCard/index";
 
 import s from './style.module.css';
+import {PokemonContext} from "../../../../context/pokemonContext";
 
 const StartPage = ({ isActive }) => {
   const firebase = useContext(FireBaseContext);
@@ -13,7 +14,9 @@ const StartPage = ({ isActive }) => {
   const getPokemons = () => {
     firebase.getPokemonSocket((pokemons) => {
       setPokemons(pokemons);
-    })
+    });
+
+    return () => firebase.getPokemonSocket();
   };
 
   useEffect(() => {
@@ -36,7 +39,7 @@ const StartPage = ({ isActive }) => {
       firebase.addPokemon(newPokemon, () => getPokemons());
   };
 
-  const handleChangeActive = (id, key) => {
+  const handleChangeActive = (id) => {
     setPokemons(prevState => {
       return Object.entries(prevState).reduce((acc, item) => {
         const pokemon = {...item[1]};
@@ -47,37 +50,38 @@ const StartPage = ({ isActive }) => {
         acc[item[0]] = pokemon;
 
         firebase.postPokemon(item[0], pokemon);
-
+        console.log(item[0]);
         return acc;
       }, {});
     });
   };
 
   return (
-    <>
-      <div className={s.div}>
-        <button className={cn(Button, s.back)}
-                onClick={handleAddPokemon}>
-          Add New Pokemon
-        </button>
-        <div className={s.flex}>
-          {
-            Object.entries(pokemons).map(([key,
-                                            {name, img, id, type, values, active, className, minimize}]) =>
-              <PokemonCard className={className}
-                           key={key}
-                           type={type}
-                           name={name}
-                           img={img}
-                           id={id}
-                           values={values}
-                           active={active}
-                           minimize={minimize}
-                           clickOn={handleChangeActive}/>)
-          }
+    <PokemonContext.Provider value={{pokemon: []}}>
+      <>
+        <div className={s.div}>
+          <button className={cn(Button, s.back)}
+                  onClick={handleAddPokemon}>
+            Start Game
+          </button>
+          <div className={s.flex}>
+            {
+              Object.entries(pokemons).map(([key,
+                                              {name, img, id, type, values, active}]) =>
+                <PokemonCard className={s.card}
+                             key={key}
+                             type={type}
+                             name={name}
+                             img={img}
+                             id={id}
+                             values={values}
+                             isActive={true}
+                             onClick={() => handleChangeActive(key)}/>)
+            }
+          </div>
         </div>
-      </div>
-    </>
+      </>
+    </PokemonContext.Provider>
   );
 };
 
