@@ -39,21 +39,14 @@ const StartPage = ({ isActive }) => {
       firebase.addPokemon(newPokemon, () => getPokemons());
   };
 
-  const handleChangeActive = (id) => {
-    setPokemons(prevState => {
-      return Object.entries(prevState).reduce((acc, item) => {
-        const pokemon = {...item[1]};
-        if (pokemon.id === id) {
-          pokemon.active = !pokemon.active;
-        }
-
-        acc[item[0]] = pokemon;
-
-        firebase.postPokemon(item[0], pokemon);
-        console.log(item[0]);
-        return acc;
-      }, {});
-    });
+  const handleChangeSelected = (key) => {
+    setPokemons(prevState => ({
+      ...prevState,
+      [key]: {
+        ...prevState[key],
+        selected: !prevState[key].selected,
+      }
+    }))
   };
 
   return (
@@ -67,7 +60,7 @@ const StartPage = ({ isActive }) => {
           <div className={s.flex}>
             {
               Object.entries(pokemons).map(([key,
-                                              {name, img, id, type, values, active}]) =>
+                                              {name, img, id, type, values, selected}]) =>
                 <PokemonCard className={s.card}
                              key={key}
                              type={type}
@@ -76,7 +69,8 @@ const StartPage = ({ isActive }) => {
                              id={id}
                              values={values}
                              isActive={true}
-                             onClick={() => handleChangeActive(key)}/>)
+                             isSelected={selected}
+                             onClick={() => handleChangeSelected(key)}/>)
             }
           </div>
         </div>
