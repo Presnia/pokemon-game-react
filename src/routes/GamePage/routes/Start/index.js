@@ -25,24 +25,10 @@ const StartPage = ({ isActive }) => {
     getPokemons();
   }, []);
 
-  const handleAddPokemon = (cb) => {
-      const newPokemon = {
-        "abilities": ["keen-eye", "tangled-feet", "big-pecks"],
-        "base_experience": 122,
-        "height": 11,
-        "id": 17,
-        "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/17.png",
-        "name": "pidgeotto",
-        "type": "normal",
-        "values":  {bottom: 1, left: 2, right: 5, top: 7},
-        "weight": 340,
-      };
-
-      firebase.addPokemon(newPokemon, () => getPokemons());
-  };
 
   const handleChangeSelected = (key) => {
-    pokemonsContext.onSelectedPokemons();
+    const pokemon = {...pokemons[key]}
+    pokemonsContext.onSelectedPokemons(key, pokemon);
 
     setPokemons(prevState => ({
       ...prevState,
@@ -58,7 +44,7 @@ const StartPage = ({ isActive }) => {
       <>
         <div className={s.div}>
           <button className={cn(Button, s.back)}
-                  onClick={handleAddPokemon}>
+                  >
             Start Game
           </button>
           <div className={s.flex}>
@@ -74,7 +60,13 @@ const StartPage = ({ isActive }) => {
                              values={values}
                              isActive={true}
                              isSelected={selected}
-                             onClick={() => handleChangeSelected(key)}/>)
+                             onClick={() => {
+                               if (Object.keys(pokemonsContext.pokemons).length < 5 || selected) {
+                                 handleChangeSelected(key)
+                               }
+                             }}
+                />
+                )
             }
           </div>
         </div>
