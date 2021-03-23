@@ -9,6 +9,8 @@ import {PokemonContext} from "../../../../context/pokemonContext";
 
 const StartPage = ({ isActive }) => {
   const firebase = useContext(FireBaseContext);
+  const pokemonsContext = useContext(PokemonContext);
+  console.log('==> pokemonsContext', pokemonsContext);
   const[pokemons, setPokemons] = useState({});
 
   const getPokemons = () => {
@@ -40,6 +42,8 @@ const StartPage = ({ isActive }) => {
   };
 
   const handleChangeSelected = (key) => {
+    pokemonsContext.onSelectedPokemons();
+
     setPokemons(prevState => ({
       ...prevState,
       [key]: {
