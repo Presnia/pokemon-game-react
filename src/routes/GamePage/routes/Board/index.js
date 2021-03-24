@@ -6,6 +6,23 @@ import { PokemonContext } from "../../../../context/pokemonContext";
 import s from './style.module.css';
 import PlayerBoard from "./component/PlayerBoard";
 
+const counterWin = (board, player1, player2) => {
+    let player1Count = player1.length;
+    let player2Count = player2.length;
+
+    board.forEach(item => {
+      if (item.card.possession === 'red') {
+          player2Count++;
+      }
+
+      if (item.card.possession === 'blue') {
+        player1Count++;
+      }
+    });
+
+    return [player1Count, player2Count];
+}
+
   const BoardPage = () => {
     const { pokemons } = useContext(PokemonContext);
     const [board, setBoard] = useState([]);
@@ -17,6 +34,8 @@ import PlayerBoard from "./component/PlayerBoard";
     });
     const [player2, setPlayer2] = useState([]);
     const [choiceCard, setChoiceCard] = useState(null);
+    const [steps, setSteps] = useState(0);
+
     const history = useHistory();
 
 
@@ -61,10 +80,35 @@ import PlayerBoard from "./component/PlayerBoard";
 
       const request = await res.json();
 
-      console.log('###: request', request);
+      if (choiceCard.player === 1) {
+        setPlayer1(prevState => prevState.filter(item => item.id !== choiceCard.id))
+      }
+
+      if (choiceCard.player === 2) {
+        setPlayer1(prevState => prevState.filter(item => item.id !== choiceCard.id))
+      }
+
       setBoard(request.data);
+      setSteps(prevState => {
+        const count = prevState + 1;
+        return count;
+      });
     }
   }
+
+  useEffect(() => {
+      if (steps === 9) {
+          const [count1, count2] = counterWin(board, player1, player2);
+
+          if (count1 > count2) {
+            alert('WIN');
+          } else if (count1 < count2) {
+            alert('LOSE');
+          } else {
+            alert('DRAW')
+          }
+      }
+  }, [steps]);
 
   return (
       <div className={s.root}>
