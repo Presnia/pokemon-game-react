@@ -10,7 +10,7 @@ const BoardPage = () => {
   const [player2, setPlayer2] = useState([]);
   const { pokemons } = useContext(PokemonContext);
   const history = useHistory();
-  console.log('###: player2', player2)
+
 
   useEffect(async () => {
     const boardResponse = await fetch('https://reactmarathon-api.netlify.app/api/board');
@@ -24,9 +24,9 @@ const BoardPage = () => {
     setPlayer2(playerRequest.data);
   }, []);
 
-  // if (Object.keys(pokemons).length === 0) {
-  //   history.replace('/game');
-  // }
+  if (Object.keys(pokemons).length === 0) {
+    history.replace('/game');
+  }
 
   const handleClickBoardPlate = (position) => {
     console.log('###: position', position)
