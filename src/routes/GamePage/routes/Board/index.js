@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import PokemonCard from "../../../../components/PokemonCard";
 import { PokemonContext } from "../../../../context/pokemonContext";
@@ -6,11 +6,24 @@ import { PokemonContext } from "../../../../context/pokemonContext";
 import s from './style.module.css';
 
 const BoardPage = () => {
+  const [board, setBoard] = useState([]);
   const { pokemons } = useContext(PokemonContext);
   const history = useHistory();
+  console.log('###: board', board)
 
-  if (Object.keys(pokemons).length === 0) {
-    history.replace('/game');
+  useEffect(async () => {
+    const boardResponse = await fetch('https://reactmarathon-api.netlify.app/api/board');
+    const boardRequest = await boardResponse.json();
+
+    setBoard(boardRequest.data);
+  }, []);
+
+  // if (Object.keys(pokemons).length === 0) {
+  //   history.replace('/game');
+  // }
+
+  const handleClickBoardPlate = (position) => {
+    console.log('###: position', position)
   }
 
   return (
@@ -31,16 +44,20 @@ const BoardPage = () => {
             ))
           }
         </div>
+
         <div className={s.board}>
-          <div className={s.boardPlate}>1</div>
-          <div className={s.boardPlate}>2</div>
-          <div className={s.boardPlate}>3</div>
-          <div className={s.boardPlate}>4</div>
-          <div className={s.boardPlate}>5</div>
-          <div className={s.boardPlate}>6</div>
-          <div className={s.boardPlate}>7</div>
-          <div className={s.boardPlate}>8</div>
-          <div className={s.boardPlate}>9</div>
+          {
+            board.map(item => (
+              <div key={item.position}
+                   className={s.boardPlate}
+                   onClick={() => !item.card && handleClickBoardPlate(item.position)}
+              >
+                {
+                  item.card && <PokemonCard {...item} minimize />
+                }
+              </div>
+            ))
+          }
         </div>
       </div>
   );
