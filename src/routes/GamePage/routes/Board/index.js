@@ -4,12 +4,14 @@ import PokemonCard from "../../../../components/PokemonCard";
 import { PokemonContext } from "../../../../context/pokemonContext";
 
 import s from './style.module.css';
+import PlayerBoard from "./component/PlayerBoard";
 
-const BoardPage = () => {
-  const [board, setBoard] = useState([]);
-  const [player2, setPlayer2] = useState([]);
-  const { pokemons } = useContext(PokemonContext);
-  const history = useHistory();
+  const BoardPage = () => {
+    const [board, setBoard] = useState([]);
+    const [player2, setPlayer2] = useState([]);
+    const [choiceCard, setChoiceCard] = useState(null);
+    const { pokemons } = useContext(PokemonContext);
+    const history = useHistory();
 
 
   useEffect(async () => {
@@ -30,25 +32,16 @@ const BoardPage = () => {
 
   const handleClickBoardPlate = (position) => {
     console.log('###: position', position)
+    console.log('###: choiceCard', choiceCard)
   }
 
   return (
       <div className={s.root}>
         <div className={s.playerOne}>
-          {
-            Object.values(pokemons).map(({id, name, img, type, values}) => (
-              <PokemonCard className={s.card}
-                           key={id}
-                           type={type}
-                           name={name}
-                           img={img}
-                           id={id}
-                           values={values}
-                           minimize
-                           isActive
-              />
-            ))
-          }
+          <PlayerBoard
+            cards={Object.values(pokemons)}
+            onClickCard={(card) => setChoiceCard(card)}
+          />
         </div>
 
         <div className={s.board}>
@@ -67,20 +60,10 @@ const BoardPage = () => {
         </div>
 
         <div className={s.playerTwo}>
-          {
-            player2.map(({id, name, img, type, values}) => (
-              <PokemonCard className={s.card}
-                           key={id}
-                           type={type}
-                           name={name}
-                           img={img}
-                           id={id}
-                           values={values}
-                           minimize
-                           isActive
-              />
-            ))
-          }
+          <PlayerBoard
+            cards={player2}
+            onClickCard={(card) => setChoiceCard(card)}
+          />
         </div>
       </div>
   );

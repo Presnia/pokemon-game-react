@@ -33,11 +33,13 @@
 .card {
     max-height: 14.8vw;
     margin-top: -6vw;
+    cursor: pointer;
 }
 
 .card:first-child {
     margin-top: 0;
 }
+
 .playerOne {
     position: absolute;
     top: 4.3vw;
