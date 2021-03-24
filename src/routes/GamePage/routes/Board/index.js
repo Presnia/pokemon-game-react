@@ -61,8 +61,6 @@ const counterWin = (board, player1, player2) => {
   }
 
   const handleClickBoardPlate = async (position) => {
-    console.log('###: position', position)
-    console.log('###: choiceCard', choiceCard)
     if (choiceCard) {
       const params = {
         position,
