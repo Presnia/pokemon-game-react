@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import Result from "../Result";
 import PokemonCard from "../../../../components/PokemonCard";
 import { PokemonContext } from "../../../../context/pokemonContext";
 
@@ -94,16 +95,22 @@ const counterWin = (board, player1, player2) => {
     }
   }
 
+  const [result, setResult] = useState('');
+  const [isActive, setActive] = useState(null);
+
   useEffect(() => {
       if (steps === 9) {
           const [count1, count2] = counterWin(board, player1, player2);
 
           if (count1 > count2) {
-            alert('WIN');
+            setResult('win');
+            setActive(!isActive);
           } else if (count1 < count2) {
-            alert('LOSE');
+            setResult('lose');
+            setActive(!isActive);
           } else {
-            alert('DRAW')
+            setResult('draw');
+            setActive(!isActive);
           }
       }
   }, [steps]);
@@ -140,6 +147,11 @@ const counterWin = (board, player1, player2) => {
             onClickCard={(card) => setChoiceCard(card)}
           />
         </div>
+
+        <Result
+          type={result}
+          isActive={isActive}
+        />
       </div>
   );
 };
