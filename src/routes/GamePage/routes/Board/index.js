@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import Result from "../Result";
 import PokemonCard from "../../../../components/PokemonCard";
 import { PokemonContext } from "../../../../context/pokemonContext";
-
+import { BoardContext } from "../../../../context/boardContext";
 import s from './style.module.css';
 import PlayerBoard from "./component/PlayerBoard";
 
@@ -116,6 +116,7 @@ const counterWin = (board, player1, player2) => {
   }, [steps]);
 
   return (
+    <BoardContext.Provider value={[player1, player2]}>
       <div className={s.root}>
         <div className={s.playerOne}>
           <PlayerBoard
@@ -153,6 +154,7 @@ const counterWin = (board, player1, player2) => {
           isActive={isActive}
         />
       </div>
+    </BoardContext.Provider>
   );
 };
 
