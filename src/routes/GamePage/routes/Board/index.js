@@ -24,7 +24,7 @@ const counterWin = (board, player1, player2) => {
 }
 
   const BoardPage = () => {
-    const { pokemons, setCardsPlayer2 } = useContext(PokemonContext);
+    const { pokemons, setCardsPlayer2, setWin, youWin } = useContext(PokemonContext);
     const [board, setBoard] = useState([]);
     const [player2, setPlayer2] = useState([]);
     const [player1, setPlayer1] = useState(() => {
@@ -98,7 +98,6 @@ const counterWin = (board, player1, player2) => {
 
   const [result, setResult] = useState('');
   const [isActive, setActive] = useState(null);
-  const [youWin, setWin] = useState(null);
 
   useEffect(() => {
       if (steps === 9) {

@@ -6,7 +6,7 @@ import s from './style.module.css';
 import PokemonCard from "../../../../components/PokemonCard";
 
 const FinishPage = () => {
-  const { pokemons, cardsPlayer2 } = useContext(PokemonContext);
+  const { pokemons, cardsPlayer2, youWin } = useContext(PokemonContext);
   console.log(useContext(PokemonContext))
   const firebase = useContext(FireBaseContext);
   const [statePokemon, setStatePokemon] = useState({});
@@ -21,7 +21,9 @@ const FinishPage = () => {
 
   const handleClick = () => {
     history.replace('/game');
-    firebase.addPokemon(statePokemon)
+    if (youWin === true) {
+      return firebase.addPokemon(statePokemon);
+    }
   }
 
   return (
