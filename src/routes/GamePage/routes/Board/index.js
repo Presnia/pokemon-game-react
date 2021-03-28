@@ -105,7 +105,7 @@ const counterWin = (board, player1, player2) => {
 
           if (count1 > count2) {
             setResult(() => 'win');
-            setWin(youWin);
+            setWin(youWin === true);
             setActive(!isActive);
           } else if (count1 < count2) {
             setResult(() => 'lose');

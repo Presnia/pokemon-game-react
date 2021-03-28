@@ -28,7 +28,7 @@ const FinishPage = () => {
       history.replace('/game');
     }
 
-
+    
   }
 
   return (

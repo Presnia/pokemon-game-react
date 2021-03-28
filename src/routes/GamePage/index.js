@@ -8,7 +8,7 @@ import FinishPage from './routes/Finish/index';
 const GamePage = () => {
   const [selectedPokemons, setSelectedPokemons] = useState({});
   const [cardsPlayer2, setCardsPlayer2] = useState({});
-  const [youWin, setWin] = useState(null);
+  const [youWin, setWin] = useState(false);
 
   const match = useRouteMatch();
 
