@@ -3,7 +3,6 @@ import { useHistory } from 'react-router-dom';
 import Result from "../Result";
 import PokemonCard from "../../../../components/PokemonCard";
 import { PokemonContext } from "../../../../context/pokemonContext";
-import { BoardContext } from "../../../../context/boardContext";
 import s from './style.module.css';
 import PlayerBoard from "./component/PlayerBoard";
 
@@ -25,7 +24,7 @@ const counterWin = (board, player1, player2) => {
 }
 
   const BoardPage = () => {
-    const { pokemons } = useContext(PokemonContext);
+    const { pokemons, setCardsPlayer2 } = useContext(PokemonContext);
     const [board, setBoard] = useState([]);
     const [player2, setPlayer2] = useState([]);
     const [player1, setPlayer1] = useState(() => {
@@ -46,15 +45,17 @@ const counterWin = (board, player1, player2) => {
 
     setBoard(boardResponse.data);
 
-    const player2Request = await fetch('https://reactmarathon-api.netlify.app/api/create-player');
-    const player2Response = await player2Request.json();
+    const player2Response = await fetch('https://reactmarathon-api.netlify.app/api/create-player');
+    const player2Request = await player2Response.json();
 
     setPlayer2(() => {
-      return player2Response.data.map(item => ({
+      return player2Request.data.map(item => ({
         ...item,
         possession: 'red'
       }))
     });
+
+    setCardsPlayer2(() => player2Request);
   }, []);
 
   if (Object.keys(pokemons).length === 0) {
@@ -97,6 +98,7 @@ const counterWin = (board, player1, player2) => {
 
   const [result, setResult] = useState('');
   const [isActive, setActive] = useState(null);
+  const [youWin, setWin] = useState(null);
 
   useEffect(() => {
       if (steps === 9) {
@@ -104,6 +106,7 @@ const counterWin = (board, player1, player2) => {
 
           if (count1 > count2) {
             setResult(() => 'win');
+            setWin(youWin);
             setActive(!isActive);
           } else if (count1 < count2) {
             setResult(() => 'lose');
@@ -116,7 +119,6 @@ const counterWin = (board, player1, player2) => {
   }, [steps]);
 
   return (
-    <BoardContext.Provider value={[player1, player2]}>
       <div className={s.root}>
         <div className={s.playerOne}>
           <PlayerBoard
@@ -154,7 +156,6 @@ const counterWin = (board, player1, player2) => {
           isActive={isActive}
         />
       </div>
-    </BoardContext.Provider>
   );
 };
 

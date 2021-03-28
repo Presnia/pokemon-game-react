@@ -7,8 +7,9 @@ import s from './style.module.css';
 import PokemonCard from "../../../../components/PokemonCard";
 
 const FinishPage = () => {
-  const { pokemons } = useContext(PokemonContext);
+  const { pokemons, setCardsPlayer2 } = useContext(PokemonContext);
   const firebase = useContext(FireBaseContext);
+  console.log(useContext(PokemonContext))
   const [statePokemon, setStatePokemon] = useState({});
   const history = useHistory();
 
@@ -23,9 +24,6 @@ const FinishPage = () => {
     history.replace('/game');
     firebase.addPokemon(statePokemon)
   }
-
-  const value = useContext(BoardContext);
-  console.log('===> value', value)
 
   return (
       <div className={s.container}>
@@ -51,7 +49,7 @@ const FinishPage = () => {
 
         <section className={s.player2}>
           {
-            Object.values(pokemons).map(item => (
+            Object.values(setCardsPlayer2).map(item => (
                 <PokemonCard key={item.key}
                              type={item.type}
                              name={item.name}
