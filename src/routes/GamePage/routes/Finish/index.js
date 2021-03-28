@@ -2,14 +2,13 @@ import { useHistory } from 'react-router-dom';
 import { useContext, useState } from 'react';
 import { PokemonContext } from "../../../../context/pokemonContext";
 import { FireBaseContext } from "../../../../context/firebaseContext";
-import { BoardContext } from "../../../../context/boardContext";
 import s from './style.module.css';
 import PokemonCard from "../../../../components/PokemonCard";
 
 const FinishPage = () => {
-  const { pokemons, setCardsPlayer2 } = useContext(PokemonContext);
-  const firebase = useContext(FireBaseContext);
+  const { pokemons, cardsPlayer2 } = useContext(PokemonContext);
   console.log(useContext(PokemonContext))
+  const firebase = useContext(FireBaseContext);
   const [statePokemon, setStatePokemon] = useState({});
   const history = useHistory();
 
@@ -49,7 +48,7 @@ const FinishPage = () => {
 
         <section className={s.player2}>
           {
-            Object.values(setCardsPlayer2).map(item => (
+            Object.values(cardsPlayer2.data).map(item => (
                 <PokemonCard key={item.key}
                              type={item.type}
                              name={item.name}

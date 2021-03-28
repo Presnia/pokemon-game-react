@@ -55,7 +55,7 @@ const counterWin = (board, player1, player2) => {
       }))
     });
 
-    setCardsPlayer2(() => player2Request);
+    setCardsPlayer2(player2Request);
   }, []);
 
   if (Object.keys(pokemons).length === 0) {
