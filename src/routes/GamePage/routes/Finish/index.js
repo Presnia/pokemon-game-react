@@ -7,7 +7,6 @@ import PokemonCard from "../../../../components/PokemonCard";
 
 const FinishPage = () => {
   const { pokemons, cardsPlayer2, youWin } = useContext(PokemonContext);
-  console.log(useContext(PokemonContext))
   const firebase = useContext(FireBaseContext);
   const [statePokemon, setStatePokemon] = useState({});
   const history = useHistory();
@@ -15,7 +14,7 @@ const FinishPage = () => {
   const checkCards = (item) => {
     const player2Cards = {
       ...item
-    }
+    };
     setStatePokemon(player2Cards);
   }
 
@@ -24,6 +23,12 @@ const FinishPage = () => {
     if (youWin === true) {
       return firebase.addPokemon(statePokemon);
     }
+
+    if (Object.keys(cardsPlayer2).length === 0){
+      history.replace('/game');
+    }
+
+
   }
 
   return (
