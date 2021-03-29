@@ -6,7 +6,7 @@ import s from './style.module.css';
 import PokemonCard from "../../../../components/PokemonCard";
 
 const FinishPage = () => {
-  const { pokemons, cardsPlayer2, youWin } = useContext(PokemonContext);
+  const { pokemons, cardsPlayer2, youWin, setSelectedPokemons } = useContext(PokemonContext);
   const firebase = useContext(FireBaseContext);
   const [statePokemon, setStatePokemon] = useState({});
   const history = useHistory();
@@ -18,17 +18,17 @@ const FinishPage = () => {
     setStatePokemon(player2Cards);
   }
 
-  const handleClick = () => {
+  const handleClickBtn = () => {
     history.replace('/game');
+    // setSelectedPokemons({});
+  }
+
+  const handleClickCard = () => {
+    Object.values(cardsPlayer2.data).filter(item => item.id);
+    console.log('###: card is clicked',)
     if (youWin === true) {
-      return firebase.addPokemon(statePokemon);
+      firebase.addPokemon(statePokemon);
     }
-
-    if (Object.keys(cardsPlayer2).length === 0){
-      history.replace('/game');
-    }
-
-    
   }
 
   return (
@@ -48,7 +48,7 @@ const FinishPage = () => {
           }
         </section>
         <button className={s.button}
-                onClick={handleClick}
+                onClick={handleClickBtn}
         >
           END GAME
         </button>
@@ -56,15 +56,16 @@ const FinishPage = () => {
         <section className={s.player2}>
           {
             Object.values(cardsPlayer2.data).map(item => (
-                <PokemonCard key={item.key}
-                             type={item.type}
-                             name={item.name}
-                             img={item.img}
-                             id={item.id}
-                             values={item.values}
-                             isActive
-                             onClick={() => checkCards(item.id, item)}
-                />
+              <PokemonCard className={s.card}
+                           key={item.key}
+                           type={item.type}
+                           name={item.name}
+                           img={item.img}
+                           id={item.id}
+                           values={item.values}
+                           isActive
+                           onClick={handleClickCard}
+              />
             ))
           }
         </section>
