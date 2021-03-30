@@ -2,6 +2,7 @@ import { useHistory } from 'react-router-dom';
 import { useContext, useState } from 'react';
 import { PokemonContext } from "../../../../context/pokemonContext";
 import { FireBaseContext } from "../../../../context/firebaseContext";
+import cn from 'classnames';
 import s from './style.module.css';
 import PokemonCard from "../../../../components/PokemonCard";
 
@@ -9,6 +10,7 @@ const FinishPage = () => {
   const { pokemons, cardsPlayer2, youWin, setSelectedPokemons } = useContext(PokemonContext);
   const firebase = useContext(FireBaseContext);
   const [statePokemon, setStatePokemon] = useState({});
+  const [isSelected, setSelected] = useState(null);
   const history = useHistory();
 
   const checkCards = (item) => {
@@ -20,14 +22,13 @@ const FinishPage = () => {
 
   const handleClickBtn = () => {
     history.replace('/game');
-    // setSelectedPokemons({});
-  }
-
-  const handleClickCard = () => {
-    Object.values(cardsPlayer2.data).filter(item => item.id);
-    console.log('###: card is clicked',)
     if (youWin === true) {
       firebase.addPokemon(statePokemon);
+    }
+    // setSelectedPokemons({});
+
+    if (Object.keys(cardsPlayer2).length === 0){
+      history.replace('/game');
     }
   }
 
@@ -56,16 +57,23 @@ const FinishPage = () => {
         <section className={s.player2}>
           {
             Object.values(cardsPlayer2.data).map(item => (
-              <PokemonCard className={s.card}
-                           key={item.key}
-                           type={item.type}
-                           name={item.name}
-                           img={item.img}
-                           id={item.id}
-                           values={item.values}
-                           isActive
-                           onClick={handleClickCard}
-              />
+              <div className={cn(s.card, {
+                [s.selected]: isSelected
+              })}
+              onClick={() => {
+                checkCards(item.id)
+                setSelected(item.id)
+                console.log(isSelected)
+              }}>
+                <PokemonCard key={item.key}
+                             type={item.type}
+                             name={item.name}
+                             img={item.img}
+                             id={item.id}
+                             values={item.values}
+                             isActive
+                />
+              </div>
             ))
           }
         </section>
