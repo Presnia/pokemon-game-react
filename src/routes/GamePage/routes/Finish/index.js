@@ -57,23 +57,19 @@ const FinishPage = () => {
         <section className={s.player2}>
           {
             Object.values(cardsPlayer2.data).map(item => (
-              <div className={cn(s.card, {
-                [s.selected]: isSelected
-              })}
-              onClick={() => {
-                checkCards(item.id)
-                setSelected(item.id)
-                console.log(isSelected)
-              }}>
-                <PokemonCard key={item.key}
+                <PokemonCard className={cn(s.card, {[s.selected]: isSelected})}key={item.key}
                              type={item.type}
                              name={item.name}
                              img={item.img}
                              id={item.id}
                              values={item.values}
                              isActive
+                             onClick={() => {
+                               checkCards(item.id)
+                               setSelected(item.id)
+                               console.log(isSelected)
+                             }}
                 />
-              </div>
             ))
           }
         </section>
